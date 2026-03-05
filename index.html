@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak from Zubair ✨</title>
+    <meta name="description"
+        content="A premium, personalized Eid Mubarak experience with wishes, card generator, and interactive fun!">
+
+    <!-- CDN Dependencies -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        gold: '#C9960C', 'gold-light': '#F5C842',
+                        emerald: { deep: '#1B5E3B' }, ivory: '#FDFAF0', cream: '#FFF8E7'
+                    },
+                    fontFamily: {
+                        amiri: ['Amiri', 'serif'], cormorant: ['Cormorant Garamond', 'serif'],
+                        nunito: ['Nunito', 'sans-serif'], playfair: ['Playfair Display', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="relative min-h-screen">
+
+    <canvas id="particleCanvas"></canvas>
+    <div id="scroll-progress"></div>
+
+    <!-- Fixed top-right controls — stacked so they never overlap -->
+    <div id="fixed-controls">
+        <div id="score-badge">🪙 <span id="scoreVal">0</span></div>
+        <button id="music-btn" onclick="toggleMusic()" title="Toggle Nasheed Music">🎵</button>
+    </div>
+    <div id="toast"></div>
+
+    <!-- Hidden Audio Player — place your Eid nasheed as music.mp3 in the project folder -->
+    <audio id="nasheed-audio" loop preload="auto">
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Welcome Voice Note — rename your audio file to welcome.mp3 and place it in the project folder -->
+    <audio id="welcome-audio" preload="auto">
+        <source src="welcome.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- Hidden YouTube fallback (Eid Mubarak nasheed) — used only if music.mp3 is missing -->
+    <div id="yt-player-wrap"
+        style="position:fixed;bottom:-999px;left:-999px;width:1px;height:1px;overflow:hidden;pointer-events:none;"
+        aria-hidden="true">
+        <iframe id="yt-player"
+            src="https://www.youtube.com/embed/7Bqk2kQs8q0?enablejsapi=1&autoplay=0&loop=1&playlist=7Bqk2kQs8q0"
+            allow="autoplay" frameborder="0" style="width:1px;height:1px">
+        </iframe>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ SECTION 1: HERO ══ -->
+    <section
+        class="relative min-h-screen flex flex-col items-center justify-center overflow-hidden px-4 pt-16 text-center"
+        id="hero">
+
+        <!-- ── Noor radial glow ── -->
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="z-index:1">
+            <div
+                style="width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(245,200,66,0.25) 0%,transparent 70%);animation:noorBreath 5s ease-in-out infinite;">
+            </div>
+        </div>
+
+        <!-- ── Hero background image ── -->
+        <div class="absolute inset-0"
+            style="background-image:url('kids.png');background-size:cover;background-position:center;z-index:0;"></div>
+        <div class="absolute inset-0"
+            style="background:linear-gradient(to bottom,rgba(3,7,18,0.28),rgba(3,7,18,0.70));z-index:1;"></div>
+
+        <!-- ── String Lights ── -->
+        <div class="lights-string" id="lights-string" style="z-index:8;top:0;height:32px;"></div>
+
+        <!-- ── Twinkling stars ── -->
+        <div class="absolute inset-0 pointer-events-none" style="z-index:2">
+            <span class="absolute top-[15%] left-[20%] text-2xl" style="animation:twinkle 2.1s infinite">⭐</span>
+            <span class="absolute top-[10%] right-[25%] text-xl" style="animation:twinkle 3s infinite 0.5s">✨</span>
+            <span class="absolute top-[30%] left-[8%] text-lg" style="animation:twinkle 2.5s infinite 1s">🌟</span>
+            <span class="absolute top-[8%]  left-[50%] text-xl" style="animation:twinkle 1.8s infinite 0.3s">⭐</span>
+            <span class="absolute top-[25%] right-[10%] text-lg" style="animation:twinkle 2.8s infinite 0.7s">✨</span>
+            <span class="absolute top-[18%] left-[38%] text-lg" style="animation:twinkle 2.2s infinite 1.3s">💫</span>
+            <span class="absolute top-[35%] right-[30%] text-xl" style="animation:twinkle 3.2s infinite 0.9s">🌟</span>
+            <span class="absolute top-[5%]  right-[40%] text-2xl" style="animation:twinkle 1.5s infinite 0.2s">⭐</span>
+        </div>
+
+        <!-- ── Corner lanterns ── -->
+        <span class="lantern absolute top-8 left-4 text-5xl" style="z-index:8">🪔</span>
+        <span class="lantern absolute top-8 right-4 text-5xl" style="z-index:8">🏮</span>
+        <span class="lantern absolute top-24 left-16 text-4xl hidden md:inline" style="z-index:8">🪔</span>
+        <span class="lantern absolute top-24 right-16 text-4xl hidden md:inline" style="z-index:8">🏮</span>
+        <span class="lantern absolute top-44 left-6 text-3xl hidden lg:inline" style="z-index:8">🎇</span>
+        <span class="lantern absolute top-44 right-6 text-3xl hidden lg:inline" style="z-index:8">🎆</span>
+
+        <!-- ── Hero content ── -->
+        <div class="relative flex flex-col items-center gap-4 hero-content-anim" style="z-index:5;animation-delay:0.3s">
+            <div class="crescent-wrap text-8xl md:text-9xl mb-2">🌙</div>
+            <h1 class="font-amiri text-6xl md:text-8xl shimmer-text font-bold leading-none drop-shadow-lg">عید مبارک
+            </h1>
+            <h2 class="font-cormorant text-3xl md:text-4xl text-yellow-200 font-semibold tracking-widest drop-shadow">
+                Eid Mubarak</h2>
+            <div class="glass rounded-2xl px-8 py-4 mt-2">
+                <p class="font-playfair text-2xl md:text-3xl shimmer-text" id="hero-name"
+                    style="animation:nameGlow 3s ease-in-out infinite">Zubair</p>
+                <p class="font-amiri text-xl md:text-2xl text-yellow-100 mt-1" dir="rtl">آپ کو اور آپ کے گھر والوں کو
+                    عید مبارک</p>
+            </div>
+            <div class="flex gap-4 mt-6 flex-wrap justify-center">
+                <button class="btn-gold text-lg" onclick="openModal('name-modal')">✨ Create Your Eid Card</button>
+                <button class="btn-emerald text-lg"
+                    onclick="document.getElementById('wishes-section').scrollIntoView({behavior:'smooth'})">🎁 Explore
+                    Wishes</button>
+                <button class="btn-gold text-lg" onclick="triggerCelebration()">🎉 Celebrate!</button>
+            </div>
+        </div>
+
+        <!-- ── Mosque SVG silhouette ── -->
+        <div class="absolute bottom-12 left-0 right-0 pointer-events-none" style="z-index:4">
+            <svg viewBox="0 0 1440 160" preserveAspectRatio="none" style="width:100%;display:block">
+                <path fill="rgba(27,94,59,0.25)"
+                    d="M0,160 L0,80 Q60,40 120,80 Q180,120 240,80 L240,40 L260,10 L280,40 L280,80 Q340,40 400,80 Q460,120 520,80 L520,40 L540,5 L548,0 L556,5 L576,40 L576,80 Q640,40 700,80 Q760,120 820,80 L820,40 L840,10 L860,40 L860,80 Q920,40 980,80 Q1040,120 1100,80 L1100,40 L1120,5 L1128,0 L1136,5 L1156,40 L1156,80 Q1220,40 1280,80 Q1360,120 1440,80 L1440,160 Z" />
+            </svg>
+        </div>
+
+        <!-- ── Scrolling Ticker ── -->
+        <div class="ticker-wrap">
+            <div class="ticker-track" id="ticker-track"></div>
+        </div>
+    </section>
+
+
+    <!-- ════════════════════════════════════════ SECTION 2: EID CARD ══ -->
+    <section class="py-20 px-4 max-w-4xl mx-auto reveal-left" id="card-section">
+        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-10" style="color:var(--emerald)">Your
+            Personalized Eid Card</h2>
+        <div class="glass rounded-3xl p-8 md:p-12 relative overflow-hidden border-2" style="border-color:var(--gold)">
+            <div class="absolute -right-8 -top-8 text-[10rem] opacity-5 select-none pointer-events-none">🌙</div>
+            <div class="text-center">
+                <p class="font-amiri text-2xl md:text-3xl mb-2" style="color:var(--emerald)" dir="rtl">تقبل الله منا
+                    ومنكم صالح الأعمال</p>
+                <div class="w-24 h-1 mx-auto my-4 rounded-full"
+                    style="background:linear-gradient(to right,transparent,var(--gold),transparent)"></div>
+                <p class="font-cormorant text-xl italic text-gray-600 mb-6">"May Allah accept good deeds from us and
+                    from you"</p>
+                <p class="font-nunito text-base text-gray-500 mb-4">With warmth and prayers, from</p>
+                <p class="font-playfair text-4xl md:text-5xl shimmer-text font-black" id="card-name"
+                    style="animation:nameGlow 3s ease-in-out infinite">Zubair</p>
+                <p class="font-nunito text-gray-500 mt-3 italic">May your Eid be filled with joy, blessings, and the
+                    love of family 🌸</p>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <button class="btn-gold text-xl py-4 px-10" onclick="openModal('name-modal')">🎉 Create & Share YOUR
+                Card</button>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════ SECTION 3: WISHES CAROUSEL ══ -->
+    <section class="py-20 relative overflow-hidden reveal" id="wishes-section"
+        style="background:linear-gradient(135deg,#1B5E3B,#2D6A4F)">
+        <div class="absolute inset-0"
+            style="background-image:url('crowd.png');background-size:cover;background-position:center;opacity:0.2;">
+        </div>
+        <div class="relative max-w-3xl mx-auto px-4" style="z-index:2">
+            <h2 class="font-cormorant text-4xl text-center font-bold mb-8 text-yellow-300">Global Eid Wishes</h2>
+            <div class="flex justify-center gap-3 mb-8 flex-wrap">
+                <button onclick="switchLang('ur')" id="tab-ur"
+                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🇵🇰
+                    Urdu</button>
+                <button onclick="switchLang('ar')" id="tab-ar"
+                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🕌
+                    Arabic</button>
+                <button onclick="switchLang('en')" id="tab-en"
+                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🇬🇧
+                    English</button>
+            </div>
+            <div class="glass rounded-2xl p-8 text-center min-h-[140px] flex flex-col items-center justify-center"
+                style="border-color:rgba(245,200,66,0.4)">
+                <p id="wish-text" class="text-2xl md:text-3xl font-amiri text-white leading-relaxed"></p>
+            </div>
+            <div class="flex justify-center gap-3 mt-6" id="wish-dots"></div>
+            <div class="text-center mt-6">
+                <button class="btn-gold px-8 py-3" onclick="copyWish()">📋 Copy This Wish</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ EID POEM SECTION ══ -->
+    <section class="py-24 px-4 reveal" style="background:linear-gradient(135deg,#FFF8E7 0%,#fce7c8 50%,#FFF8E7 100%)">
+        <div class="max-w-3xl mx-auto text-center">
+            <p class="font-amiri text-2xl mb-1" style="color:var(--gold)" dir="rtl">قصیدۂ عید</p>
+            <h2 class="font-cormorant text-4xl md:text-5xl font-bold mb-2" style="color:var(--emerald)">An Eid Poem for
+                Your Family</h2>
+            <p class="font-nunito text-gray-500 mb-10">Written with love — for every family that prays together, stays
+                together.</p>
+
+            <!-- Language tabs -->
+            <div class="flex justify-center gap-3 mb-8 flex-wrap">
+                <button onclick="switchPoem('ur')" id="poem-tab-ur"
+                    class="poem-tab poem-tab-active px-5 py-2 rounded-full font-bold font-amiri text-base transition-all duration-300">
+                    🇵🇰 اردو
+                </button>
+                <button onclick="switchPoem('ar')" id="poem-tab-ar"
+                    class="poem-tab px-5 py-2 rounded-full font-bold font-amiri text-base transition-all duration-300">
+                    🕌 عربی
+                </button>
+                <button onclick="switchPoem('en')" id="poem-tab-en"
+                    class="poem-tab px-5 py-2 rounded-full font-bold font-nunito text-base transition-all duration-300">
+                    🌍 English
+                </button>
+            </div>
+
+            <!-- Parchment card -->
+            <div class="poem-card relative mx-auto">
+                <div class="poem-ornament top">✦ ✦ ✦</div>
+
+                <!-- Urdu Poem -->
+                <div id="poem-ur" class="poem-body active" dir="rtl">
+                    <p class="poem-line">عید کا دن آیا، دلوں میں نور لایا،</p>
+                    <p class="poem-line">گھر کی گلیوں میں خوشیوں کی بہار چھایا۔</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">ماں کی دعاؤں میں جنت کی خوشبو ہے،</p>
+                    <p class="poem-line">باپ کی آغوش میں دنیا کا سکون ہے۔</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">بھائی، بہن، اور ننھے ننھے بچے،</p>
+                    <p class="poem-line">سب مل کر ہنسیں، یہ پل ہیں بہت سچے۔</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">دادا کی ڈھاڑھی میں حکمت کا خزانہ ہے،</p>
+                    <p class="poem-line">نانی کی کہانی میں محبت کا فسانہ ہے۔</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">یہ رشتے، یہ محبتیں، یہ پیار کا جہاں،</p>
+                    <p class="poem-line">خداوندا! ہمیشہ ساتھ رکھنا، تو ہر جہاں۔</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line poem-closing">عید مبارک ہو میرے پیارے گھر والو،</p>
+                    <p class="poem-line poem-closing">اللہ تمہیں ہر غم سے آزاد رکھے والو! 🌙</p>
+                </div>
+
+                <!-- Arabic Poem -->
+                <div id="poem-ar" class="poem-body" dir="rtl">
+                    <p class="poem-line">عيدٌ أتى بالبُشرى والسُّرورِ،</p>
+                    <p class="poem-line">وجمَعَ الأحبابَ في أجملِ حُضورِ.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">الأمُّ في حنانِها جنّةٌ وأمانُ،</p>
+                    <p class="poem-line">والأبُ في صُمودِه صخرٌ وبُنيانُ.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">والإخوةُ معاً كالنجومِ تتلألأُ،</p>
+                    <p class="poem-line">وفي ضحكاتِ الأطفالِ يكمُلُ الإيمانُ.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">يا جدِّي الحكيمَ، يا نورَ الدِّيارِ،</p>
+                    <p class="poem-line">في عينيكَ نرى عُمراً من الأسرارِ.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">جمَعَنا اللهُ دوماً في خيرٍ وعافيةٍ،</p>
+                    <p class="poem-line">وأسكنَ قلوبَنا المحبّةَ والرِّضى الآبِي.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line poem-closing">عيدُ مباركٌ يا أهلي وأحبابي،</p>
+                    <p class="poem-line poem-closing">أنتُم بهجتي وسعادتي وأصحابي! 🌙</p>
+                </div>
+
+                <!-- English Poem -->
+                <div id="poem-en" class="poem-body">
+                    <p class="poem-line">On this blessed day of Eid, we gather near,</p>
+                    <p class="poem-line">With hearts made warm by those we hold so dear.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">A mother's prayer — the softest, truest thing,</p>
+                    <p class="poem-line">A father's strength — beneath which sparrows sing.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">The siblings laugh, the children race and play,</p>
+                    <p class="poem-line">And grandma's hug could chase all grief away.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">We bow together, forehead to the earth,</p>
+                    <p class="poem-line">And thank our Lord for family's priceless worth.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line">Though miles may stretch between us, hearts stay near,</p>
+                    <p class="poem-line">For love needs no address — it's always here.</p>
+                    <div class="poem-spacer"></div>
+                    <p class="poem-line poem-closing">Eid Mubarak, my family — come what may,</p>
+                    <p class="poem-line poem-closing">You are the light that brightens every day. 🌙</p>
+                </div>
+
+                <div class="poem-ornament bottom">✦ ✦ ✦</div>
+
+                <!-- Copy button -->
+                <button onclick="copyPoem()" class="btn-gold mt-8 text-sm">📋 Copy This Poem</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════ SECTION 4: CATEGORY WISHES ══ -->
+
+    <section class="py-20 px-4 max-w-6xl mx-auto reveal">
+        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-4" style="color:var(--emerald)">Wishes
+            For Everyone</h2>
+        <p class="text-center text-gray-500 mb-12 font-nunito">Tap a card to shuffle wishes • Each tap earns +5 Eidi!
+        </p>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
+            <!-- Family -->
+            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-rose-400 hover:shadow-xl transition-all duration-300"
+                onclick="shuffleWish('family',this)">
+                <img src="family.png" alt="Family"
+                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-rose-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">🏠 Family</h3>
+                <p id="wish-family" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak! May
+                    our home always be a sanctuary of love, laughter, and Allah's blessings."</p>
+                <p class="text-xs text-rose-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+            </div>
+            <!-- Friends -->
+            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-sky-400 hover:shadow-xl transition-all duration-300"
+                onclick="shuffleWish('friends',this)">
+                <img src="friends.png" alt="Friends"
+                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-sky-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">🤝 Friends</h3>
+                <p id="wish-friends" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak,
+                    buddy! May your Eidi be fat and your biryani be fresh!"</p>
+                <p class="text-xs text-sky-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+            </div>
+            <!-- Colleagues -->
+            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-yellow-400 hover:shadow-xl transition-all duration-300"
+                onclick="shuffleWish('colleagues',this)">
+                <img src="colleagues.png" alt="Colleagues"
+                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
+                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">💼 Colleagues</h3>
+                <p id="wish-colleagues" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak!
+                    Wishing you success, clarity, and joy in the office and beyond."</p>
+                <p class="text-xs text-yellow-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════ SECTION 4B: RELATIVES WISHES ══ -->
+    <section class="py-20 px-4 max-w-6xl mx-auto reveal">
+        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-2" style="color:var(--emerald)">Wishes
+            for Your Loved Ones</h2>
+        <p class="font-amiri text-2xl text-center mb-2" style="color:var(--gold)" dir="rtl">مبارکباد آپ کے پیاروں کے لیے
+        </p>
+        <p class="text-center text-gray-500 mb-12 font-nunito">Tap any card to shuffle • +5 Eidi per shuffle!</p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 stagger">
+
+            <!-- Dada / Dadi -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-amber-600"
+                onclick="shuffleRelative('dadaDadi',this)">
+                <div class="text-4xl mb-2">👴👵</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">دادا / دادی</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">دادا جان، آپ کی
+                    دعاؤں کا سایہ ہمیشہ ہم پر رہے — عید مبارک! 🌙</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('dadaDadi')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-amber-500 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Nana / Nani -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-pink-400"
+                onclick="shuffleRelative('nanaNani',this)">
+                <div class="text-4xl mb-2">👴👵</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">نانا / نانی</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">نانا جان، آپ کا
+                    پیار ہمیشہ ہمارے دل میں ہے — عید مبارک! 🌸</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('nanaNani')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-pink-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Chacha -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-blue-400"
+                onclick="shuffleRelative('chacha',this)">
+                <div class="text-4xl mb-2">👨</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">چاچا</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">چاچا جان، آپ
+                    ہمارے لیے ہمیشہ مشعل راہ ہیں — عید مبارک! 🪔</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('chacha')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-blue-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Mamu -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-green-400"
+                onclick="shuffleRelative('mamu',this)">
+                <div class="text-4xl mb-2">🧑</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">ماموں</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">ماموں جان، آپ
+                    کی محبت بے مثال ہے — عید مبارک! 🌟</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('mamu')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-green-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Phupho -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-rose-400"
+                onclick="shuffleRelative('phupho',this)">
+                <div class="text-4xl mb-2">👩</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">پھوپھو</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">پھوپھو جان، آپ
+                    کی شفقت ماں جیسی ہے — عید مبارک! 🌺</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('phupho')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-rose-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Khala -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-purple-400"
+                onclick="shuffleRelative('khala',this)">
+                <div class="text-4xl mb-2">👩</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">خالہ</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">خالہ جان، آپ کا
+                    پیار ہمارا نصیب ہے — عید مبارک! 💜</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('khala')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-purple-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Cousins -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-cyan-400"
+                onclick="shuffleRelative('cousins',this)">
+                <div class="text-4xl mb-2">👫</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">Cousins</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">کزن، بہت مزے کی
+                    عید ہو! 🎈 خوب Eidi ملے اور شرارتیں بھی!</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('cousins')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-cyan-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Brother -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-indigo-400"
+                onclick="shuffleRelative('brother',this)">
+                <div class="text-4xl mb-2">👦</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">بھائی / Brother</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">بھائی جان، آپ
+                    میری طاقت ہیں — عید مبارک! 💪</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('brother')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-indigo-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+            <!-- Sister -->
+            <div class="glass rounded-2xl p-5 text-center cursor-pointer group hover:shadow-xl transition-all duration-300 border-t-4 border-t-fuchsia-400"
+                onclick="shuffleRelative('sister',this)">
+                <div class="text-4xl mb-2">👧</div>
+                <h3 class="font-cormorant text-lg font-bold text-gray-800 mb-2">بہن / Sister</h3>
+                <p class="relative-wish-text font-amiri text-sm text-gray-600 leading-relaxed" dir="rtl">آپی، آپ کی
+                    مسکراہٹ ہمارا سرمایہ ہے — عید مبارک! 🌸</p>
+                <div class="flex gap-2 mt-3 justify-center">
+                    <button onclick="event.stopPropagation();copyRelativeWish('sister')"
+                        class="text-xs px-2 py-1 rounded-full font-bold" style="background:var(--gold);color:#fff">📋
+                        Copy</button>
+                </div>
+                <p class="text-xs text-fuchsia-400 mt-2 font-semibold">Tap to shuffle ↻</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════ GIFT BOX ══ -->
+    <section class="py-24 text-center reveal-scale" style="background:linear-gradient(to bottom,var(--cream),#fce7f3)">
+        <h2 class="font-cormorant text-4xl md:text-5xl font-bold mb-2" style="color:var(--emerald)">Unwrap a Special
+            Blessing</h2>
+        <p class="text-gray-500 mb-16 font-nunito">Click the gift box to reveal your Eid wish!</p>
+        <div class="gift-box inline-block cursor-pointer relative" id="gift-scene" onclick="openGift()">
+            <div class="relative w-48 h-48 mx-auto">
+                <!-- Gift Lid (pure CSS) -->
+                <div id="gift-lid" class="gift-lid absolute top-0 left-0 w-full z-10">
+                    <div
+                        style="width:192px;height:28px;background:linear-gradient(135deg,#e11d48,#f43f5e);border-radius:8px 8px 0 0;position:relative;">
+                        <div style="position:absolute;top:-18px;left:50%;transform:translateX(-50%);font-size:2rem">🎀
+                        </div>
+                        <div
+                            style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:12px;height:28px;background:rgba(255,255,255,0.3)">
+                        </div>
+                    </div>
+                    <div
+                        style="width:192px;height:20px;background:linear-gradient(135deg,#9f1239,#be123c);border-radius:0 0 4px 4px;">
+                    </div>
+                </div>
+                <!-- Gift Body (pure CSS) -->
+                <div
+                    style="position:absolute;bottom:0;left:0;width:192px;height:130px;background:linear-gradient(135deg,#e11d48,#f43f5e);border-radius:0 0 12px 12px;">
+                    <div
+                        style="position:absolute;top:0;left:50%;transform:translateX(-50%);width:12px;height:100%;background:rgba(255,255,255,0.25);">
+                    </div>
+                    <div
+                        style="position:absolute;left:0;top:50%;transform:translateY(-50%);height:12px;width:100%;background:rgba(255,255,255,0.25);">
+                    </div>
+                </div>
+            </div>
+            <!-- Revealed wish card -->
+            <div class="gift-wish mt-8 glass rounded-2xl px-8 py-6 max-w-xs mx-auto" style="border-color:var(--gold)">
+                <p id="gift-wish-text" class="font-cormorant text-xl font-bold text-gray-800"></p>
+            </div>
+            <button id="gift-reset-btn" class="btn-gold mt-6 hidden" onclick="event.stopPropagation();resetGift()">🎁
+                Open Another Gift</button>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════ SECTION 6: CHILDREN'S PLAYGROUND ══ -->
+    <section class="py-20 px-4 reveal relative overflow-hidden"
+        style="background:linear-gradient(135deg,#fce7f3,#e0f2fe,#fff8e7)" id="playground">
+        <div class="text-center mb-4">
+            <span class="inline-flex items-center gap-2 px-5 py-2 rounded-full font-bold text-lg text-white"
+                style="background:linear-gradient(135deg,var(--gold),var(--gold-light))">
+                🪙 Eidi Collected: <span id="inline-score">0</span>
+            </span>
+        </div>
+        <div
+            class="absolute top-4 right-4 w-28 h-28 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl hidden sm:block">
+            <img src="kids.png" alt="Joyful Kids" class="w-full h-full object-cover">
+        </div>
+        <h2 class="font-playfair text-4xl text-center font-extrabold mb-2 text-pink-600">🎉 Eid Fun Zone!</h2>
+        <p class="text-center font-bold mb-12" style="color:var(--emerald)">Collect Eidi by playing with toys!</p>
+
+        <!-- Balloons -->
+        <div class="flex justify-center gap-4 md:gap-6 mb-12 flex-wrap">
+            <div class="balloon w-14 h-20 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#ef4444" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:2px;height:40px;background:#9ca3af">
+                </div>
+            </div>
+            <div class="balloon w-16 h-24 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#f59e0b;animation-delay:0.5s" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-48px;left:50%;transform:translateX(-50%);width:2px;height:48px;background:#9ca3af">
+                </div>
+            </div>
+            <div class="balloon w-14 h-20 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#3b82f6;animation-delay:1s" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:2px;height:40px;background:#9ca3af">
+                </div>
+            </div>
+            <div class="balloon w-12 h-16 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#a855f7;animation-delay:1.5s" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-32px;left:50%;transform:translateX(-50%);width:2px;height:32px;background:#9ca3af">
+                </div>
+            </div>
+            <div class="balloon w-14 h-20 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#10b981;animation-delay:0.8s" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-40px;left:50%;transform:translateX(-50%);width:2px;height:40px;background:#9ca3af">
+                </div>
+            </div>
+            <div class="balloon w-16 h-24 rounded-[50%_50%_50%_50%/60%_60%_40%_40%] relative cursor-pointer shadow-lg"
+                style="background:#ec4899;animation-delay:0.3s" onclick="popBalloon(this)">
+                <div
+                    style="position:absolute;bottom:-48px;left:50%;transform:translateX(-50%);width:2px;height:48px;background:#9ca3af">
+                </div>
+            </div>
+        </div>
+
+        <!-- Goats -->
+        <div class="flex justify-center gap-10 md:gap-20 mb-12 flex-wrap">
+            <div onclick="baaa(this)" class="cursor-pointer relative text-center select-none">
+                <div
+                    class="speech-bubble hidden absolute -top-12 left-1/2 -translate-x-1/2 bg-white border border-gray-200 px-3 py-1 rounded-xl rounded-bl-none text-sm font-bold shadow whitespace-nowrap z-10">
+                    Eid Mubarak! 🐐</div>
+                <div class="text-7xl">🐐</div>
+                <p class="text-xs text-gray-500 mt-1 font-semibold">Click me!</p>
+            </div>
+            <div onclick="baaa(this)" class="cursor-pointer relative text-center select-none">
+                <div
+                    class="speech-bubble hidden absolute -top-12 left-1/2 -translate-x-1/2 bg-white border border-gray-200 px-3 py-1 rounded-xl rounded-bl-none text-sm font-bold shadow whitespace-nowrap z-10">
+                    Eid ka din! 🐑</div>
+                <div class="text-7xl">🐑</div>
+                <p class="text-xs text-gray-500 mt-1 font-semibold">Click me!</p>
+            </div>
+            <div onclick="baaa(this)" class="cursor-pointer relative text-center select-none">
+                <div
+                    class="speech-bubble hidden absolute -top-12 left-1/2 -translate-x-1/2 bg-white border border-gray-200 px-3 py-1 rounded-xl rounded-bl-none text-sm font-bold shadow whitespace-nowrap z-10">
+                    Baaa! 🐐</div>
+                <div class="text-7xl">🐐</div>
+                <p class="text-xs text-gray-500 mt-1 font-semibold">Click me!</p>
+            </div>
+        </div>
+
+        <!-- Interactive toys -->
+        <div class="flex justify-center gap-8 md:gap-14 flex-wrap items-center mt-4">
+            <div onclick="litLantern(this)" class="cursor-pointer text-center select-none transition-all duration-300">
+                <div class="text-6xl" style="filter:drop-shadow(0 0 8px rgba(245,200,66,0.5))">🪔</div>
+                <p class="text-xs text-gray-500 mt-1">Click!</p>
+            </div>
+            <div onclick="litLantern(this)" class="cursor-pointer text-center select-none transition-all duration-300">
+                <div class="text-6xl" style="filter:drop-shadow(0 0 8px rgba(245,200,66,0.5))">🏮</div>
+                <p class="text-xs text-gray-500 mt-1">Click!</p>
+            </div>
+            <div onclick="moonClick(this)" class="cursor-pointer text-center select-none relative">
+                <div class="text-7xl">🌙</div>
+                <div class="stars-wrap absolute inset-0 pointer-events-none overflow-visible"></div>
+                <p class="text-xs text-gray-500 mt-1">Magic!</p>
+            </div>
+            <div onclick="openCandy(this)" class="cursor-pointer text-center select-none relative">
+                <div class="text-6xl candy-box">🎁</div>
+                <div class="candy-rain absolute inset-0 pointer-events-none overflow-hidden"
+                    style="width:200px;left:-70px"></div>
+                <p class="text-xs text-gray-500 mt-1">Surprise!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════ SECTION 7: FOOTER ══ -->
+    <footer class="py-16 px-4 text-center reveal-left" style="background:linear-gradient(135deg,#0f3d26,#1B5E3B)">
+        <div class="max-w-3xl mx-auto">
+            <h3 class="font-amiri text-4xl mb-2 text-yellow-300" dir="rtl">تقبل الله منا ومنكم</h3>
+            <p class="font-cormorant text-xl italic text-green-200 mb-2">"Taqabbal Allahu minna wa minkum"</p>
+            <p class="text-green-300 text-sm mb-10">May Allah accept (good deeds) from us and from you</p>
+            <div class="flex justify-center gap-4 mb-10 flex-wrap">
+                <button class="btn-gold px-6 py-3" onclick="shareWhatsApp()">📱 Share on WhatsApp</button>
+                <button class="btn-gold px-6 py-3" onclick="copyLink()">🔗 Copy Link</button>
+                <button class="btn-emerald px-6 py-3" onclick="openModal('eidi-modal')">💸 Send Eidi</button>
+            </div>
+            <div class="border-t border-green-700 pt-8 mt-4">
+                <p class="font-nunito text-green-300 text-sm">Made with ❤️ by <span
+                        class="font-bold text-yellow-300">Muhammad Zubair</span></p>
+                <div class="flex justify-center gap-3 mt-3 text-2xl">🌙 ✨ 🌸</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ══════════════════════════════════════════ MODALS ══ -->
+
+    <!-- Name Modal -->
+    <div class="modal-overlay" id="name-modal" onclick="closeOnBackdrop(event,'name-modal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3 class="font-playfair text-2xl font-bold mb-2 text-center" style="color:var(--emerald)">✨ Create Your Eid
+                Card</h3>
+            <p class="font-nunito text-gray-500 text-center mb-6">Enter your name to personalize and share!</p>
+            <input id="name-input" type="text" maxlength="30" placeholder="Your name (e.g. Zubair)"
+                class="w-full border-2 rounded-xl px-4 py-3 text-lg font-nunito focus:outline-none mb-4"
+                style="border-color:var(--gold)" onkeydown="if(event.key==='Enter')generateMyCard()">
+            <button class="btn-gold w-full text-lg py-4" onclick="generateMyCard()">🎉 Generate My Card!</button>
+            <button class="w-full mt-3 text-gray-400 hover:text-gray-600 font-semibold py-2"
+                onclick="closeModal('name-modal')">Maybe later</button>
+        </div>
+    </div>
+
+    <!-- Link Modal -->
+    <div class="modal-overlay" id="link-modal" onclick="closeOnBackdrop(event,'link-modal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3 class="font-playfair text-2xl font-bold mb-2 text-center" style="color:var(--emerald)">🎊 Your Card is
+                Ready!</h3>
+            <p class="font-nunito text-gray-500 text-center mb-4">Share this link with your loved ones:</p>
+            <div class="bg-gray-100 rounded-xl p-3 mb-4 break-all text-sm text-gray-700 font-mono select-all"
+                id="share-url"></div>
+            <div class="flex gap-3 flex-wrap">
+                <button class="btn-gold flex-1 py-3" onclick="doShareWhatsApp()">📱 WhatsApp</button>
+                <button class="btn-emerald flex-1 py-3" onclick="doCopyUrl()">🔗 Copy Link</button>
+            </div>
+            <button class="w-full mt-3 text-gray-400 hover:text-gray-600 font-semibold py-2"
+                onclick="closeModal('link-modal')">Close</button>
+        </div>
+    </div>
+
+    <!-- Eidi Modal (hardcoded — never editable by visitor) -->
+    <div class="modal-overlay" id="eidi-modal" onclick="closeOnBackdrop(event,'eidi-modal')">
+        <div class="modal-box" onclick="event.stopPropagation()">
+            <h3 class="font-playfair text-2xl font-bold mb-2 text-center" style="color:var(--emerald)">💸 Send Your
+                Eidi!</h3>
+            <p class="font-nunito text-gray-500 text-center mb-6">Show your love with a little Eidi 💛</p>
+            <div class="rounded-xl p-5 mb-5 border-2 text-center"
+                style="background:var(--cream);border-color:var(--gold)">
+                <p class="font-bold text-lg mb-1" style="color:var(--emerald)">📱 EasyPaisa / JazzCash</p>
+                <p class="font-playfair text-3xl font-black tracking-widest" style="color:var(--gold)">03260600676</p>
+                <p class="font-nunito text-gray-600 mt-3">👤 Account Title: <strong>Muhammad Zubair</strong></p>
+                <p class="font-nunito text-gray-600">💰 Minimum: <strong>50 PKR</strong></p>
+            </div>
+            <div class="flex gap-3 flex-wrap">
+                <button class="btn-gold flex-1 py-3"
+                    onclick="closeModal('eidi-modal');toast('JazakAllah Khair! 🌙 May Allah bless you!')">Sent! ✅
+                    JazakAllah</button>
+                <button class="btn-emerald flex-1 py-3" onclick="closeModal('eidi-modal')">Later 😅</button>
+            </div>
+            <p class="text-center text-sm text-gray-400 mt-4 font-nunito italic">JazakAllah Khair 🌙</p>
+        </div>
+    </div>
+
+    <!-- External JS -->
+    <script src="script.js"></script>
+</body>
+
+</html>
