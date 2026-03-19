@@ -15,6 +15,7 @@
         href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Nunito:wght@400;600;700;800&family=Playfair+Display:wght@700;900&display=swap"
         rel="stylesheet">
 
+
     <!-- Tailwind Config -->
     <script>
         tailwind.config = {
@@ -35,6 +36,11 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="styles.css">
+
+    <!-- ══ Google AdSense ══ Replace YOUR_PUBLISHER_ID with your ca-pub-XXXXXXXXXXXXXXXX -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4429158619010882"
+        crossorigin="anonymous"></script>
+
 </head>
 
 <body class="relative min-h-screen">
@@ -120,6 +126,8 @@
             <div class="glass rounded-2xl px-8 py-4 mt-2">
                 <p class="font-playfair text-2xl md:text-3xl shimmer-text" id="hero-name"
                     style="animation:nameGlow 3s ease-in-out infinite">Zubair</p>
+                <p class="font-amiri text-3xl md:text-4xl shimmer-text font-bold" id="hero-name-ur" dir="rtl"
+                    style="animation:nameGlow 3s ease-in-out infinite 0.5s"></p>
                 <p class="font-amiri text-xl md:text-2xl text-yellow-100 mt-1" dir="rtl">آپ کو اور آپ کے گھر والوں کو
                     عید مبارک</p>
             </div>
@@ -149,52 +157,113 @@
 
     <!-- ════════════════════════════════════════ SECTION 2: EID CARD ══ -->
     <section class="py-20 px-4 max-w-4xl mx-auto reveal-left" id="card-section">
-        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-10" style="color:var(--emerald)">Your
+        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-3" style="color:var(--emerald)">Your
             Personalized Eid Card</h2>
-        <div class="glass rounded-3xl p-8 md:p-12 relative overflow-hidden border-2" style="border-color:var(--gold)">
-            <div class="absolute -right-8 -top-8 text-[10rem] opacity-5 select-none pointer-events-none">🌙</div>
-            <div class="text-center">
-                <p class="font-amiri text-2xl md:text-3xl mb-2" style="color:var(--emerald)" dir="rtl">تقبل الله منا
-                    ومنكم صالح الأعمال</p>
-                <div class="w-24 h-1 mx-auto my-4 rounded-full"
-                    style="background:linear-gradient(to right,transparent,var(--gold),transparent)"></div>
-                <p class="font-cormorant text-xl italic text-gray-600 mb-6">"May Allah accept good deeds from us and
-                    from you"</p>
-                <p class="font-nunito text-base text-gray-500 mb-4">With warmth and prayers, from</p>
-                <p class="font-playfair text-4xl md:text-5xl shimmer-text font-black" id="card-name"
-                    style="animation:nameGlow 3s ease-in-out infinite">Zubair</p>
-                <p class="font-nunito text-gray-500 mt-3 italic">May your Eid be filled with joy, blessings, and the
-                    love of family 🌸</p>
+        <p class="text-center font-nunito text-gray-500 mb-10">A heartfelt wish, crafted just for you 🌙</p>
+
+        <!-- Premium Card -->
+        <div class="eid-card-premium relative overflow-hidden">
+            <!-- Corner ornaments -->
+            <div class="card-corner tl">✦</div>
+            <div class="card-corner tr">✦</div>
+            <div class="card-corner bl">✦</div>
+            <div class="card-corner br">✦</div>
+
+            <!-- Background decorative crescent -->
+            <div
+                class="absolute -right-10 -top-10 text-[14rem] opacity-[0.04] select-none pointer-events-none font-amiri">
+                🌙</div>
+            <div class="absolute -left-10 -bottom-10 text-[10rem] opacity-[0.03] select-none pointer-events-none">✨
             </div>
+
+            <!-- Top badge -->
+            <div class="flex justify-center mb-6">
+                <span class="card-badge">🕌 Eid ul Fitr 1446 H 🕌</span>
+            </div>
+
+            <!-- Arabic calligraphy -->
+            <div class="text-center mb-2">
+                <p class="font-amiri text-3xl md:text-4xl font-bold card-arabic" dir="rtl">تَقَبَّلَ اللهُ مِنَّا
+                    وَمِنْكُم</p>
+            </div>
+
+            <!-- Gold divider -->
+            <div class="card-divider my-5"><span>✦ ✦ ✦</span></div>
+
+            <!-- English translation -->
+            <p class="font-cormorant text-lg md:text-xl italic text-center mb-6" style="color:#6b4f12">
+                "May Allah accept our good deeds and yours"
+            </p>
+
+            <!-- From section -->
+            <div class="card-from-section text-center">
+                <p class="font-nunito text-sm uppercase tracking-[0.2em] mb-2" style="color:#a07820">With love &amp;
+                    prayers, from</p>
+                <p class="font-playfair text-5xl md:text-6xl font-black shimmer-text" id="card-name"
+                    style="animation:nameGlow 3s ease-in-out infinite; line-height:1.1">Zubair</p>
+                <p class="font-amiri text-4xl md:text-5xl font-bold shimmer-text" id="card-name-ur" dir="rtl"
+                    style="animation:nameGlow 3s ease-in-out infinite 0.5s; line-height:1.3"></p>
+                <div class="flex justify-center gap-1 mt-2 text-2xl">🌙 ✨ 🌸</div>
+            </div>
+
+            <!-- Gold divider -->
+            <div class="card-divider my-5"><span>✦ ✦ ✦</span></div>
+
+            <!-- Dua / blessing -->
+            <p class="font-amiri text-xl md:text-2xl text-center leading-relaxed" style="color:var(--emerald)"
+                dir="rtl">
+                عيدكم مبارك، وكل عام وأنتم بخير 🌸
+            </p>
+            <p class="font-cormorant text-base italic text-center mt-2" style="color:#888">
+                May your Eid be filled with joy, peace &amp; Allah's endless blessings.
+            </p>
+
+            <!-- Stamp seal -->
+            <div class="card-seal">🌙<br><span>Eid<br>Mubarak</span></div>
         </div>
-        <div class="text-center mt-8">
-            <button class="btn-gold text-xl py-4 px-10" onclick="openModal('name-modal')">🎉 Create & Share YOUR
+
+        <div class="text-center mt-10">
+            <button class="btn-gold text-xl py-4 px-10" onclick="openModal('name-modal')">✨ Create &amp; Share YOUR
                 Card</button>
         </div>
     </section>
 
-    <!-- ══════════════════════════════════ SECTION 3: WISHES CAROUSEL ══ -->
-    <section class="py-20 relative overflow-hidden reveal" id="wishes-section"
-        style="background:linear-gradient(135deg,#1B5E3B,#2D6A4F)">
+    <!-- ══ AD SLOT 1 — between Card & Wishes (prime position) ══
+         Replace YOUR_AD_SLOT_ID_1 with your slot ID from AdSense dashboard -->
+    <div class="ad-slot-bar">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID_1" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ════════════════════════════════════════ SECTION 3: WISHES CAROUSEL ══ -->
+    <section class="py-24 relative overflow-hidden reveal" id="wishes-section" style="background:#0a0a0a">
         <div class="absolute inset-0"
-            style="background-image:url('crowd.png');background-size:cover;background-position:center;opacity:0.2;">
+            style="background-image:url('crowd.png');background-size:cover;background-position:center;opacity:0.35;">
         </div>
-        <div class="relative max-w-3xl mx-auto px-4" style="z-index:2">
-            <h2 class="font-cormorant text-4xl text-center font-bold mb-8 text-yellow-300">Global Eid Wishes</h2>
-            <div class="flex justify-center gap-3 mb-8 flex-wrap">
-                <button onclick="switchLang('ur')" id="tab-ur"
-                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🇵🇰
-                    Urdu</button>
-                <button onclick="switchLang('ar')" id="tab-ar"
-                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🕌
-                    Arabic</button>
-                <button onclick="switchLang('en')" id="tab-en"
-                    class="px-5 py-2 rounded-full font-bold border-2 border-yellow-400 text-yellow-300 hover:bg-yellow-400 hover:text-white transition-all">🇬🇧
-                    English</button>
+        <div class="absolute inset-0" style="background:rgba(0,0,0,0.55)"></div>
+        <div class="relative max-w-2xl mx-auto px-4" style="z-index:2">
+            <div class="text-center mb-10">
+                <p class="font-amiri text-lg mb-1" style="color:rgba(245,200,66,0.65)" dir="rtl">دعائیں و آرزوئیں</p>
+                <h2 class="font-cormorant text-4xl md:text-5xl font-bold text-white">Global Eid Wishes</h2>
+                <div class="flex items-center justify-center gap-3 mt-3">
+                    <div
+                        style="width:48px;height:1px;background:linear-gradient(to right,transparent,rgba(245,200,66,0.55))">
+                    </div>
+                    <span style="color:var(--gold-light);letter-spacing:0.28rem">✦ ✦ ✦</span>
+                    <div
+                        style="width:48px;height:1px;background:linear-gradient(to left,transparent,rgba(245,200,66,0.55))">
+                    </div>
+                </div>
             </div>
-            <div class="glass rounded-2xl p-8 text-center min-h-[140px] flex flex-col items-center justify-center"
-                style="border-color:rgba(245,200,66,0.4)">
-                <p id="wish-text" class="text-2xl md:text-3xl font-amiri text-white leading-relaxed"></p>
+            <div class="flex justify-center gap-3 mb-8 flex-wrap">
+                <button onclick="switchLang('ur')" id="tab-ur" class="wish-tab">🇯🇰 Urdu</button>
+                <button onclick="switchLang('ar')" id="tab-ar" class="wish-tab">🕌 Arabic</button>
+                <button onclick="switchLang('en')" id="tab-en" class="wish-tab">🌍 English</button>
+            </div>
+            <div class="wish-glass">
+                <p id="wish-text" class="text-2xl md:text-3xl font-amiri text-white leading-relaxed text-center"></p>
             </div>
             <div class="flex justify-center gap-3 mt-6" id="wish-dots"></div>
             <div class="text-center mt-6">
@@ -312,45 +381,56 @@
         </p>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 stagger">
             <!-- Family -->
-            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-rose-400 hover:shadow-xl transition-all duration-300"
-                onclick="shuffleWish('family',this)">
+            <div class="category-card group" style="border-top:4px solid #f87171" onclick="shuffleWish('family',this)">
                 <img src="family.png" alt="Family"
-                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-rose-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">🏠 Family</h3>
-                <p id="wish-family" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak! May
+                    class="w-28 h-28 rounded-full mx-auto mb-5 object-cover border-4 shadow-lg group-hover:scale-105 transition-transform duration-300"
+                    style="border-color:#fecaca">
+                <h3 class="font-cormorant text-2xl font-bold mb-3 text-gray-800">🏠 Family</h3>
+                <p id="wish-family" class="font-nunito text-gray-500 italic text-sm leading-relaxed">"Eid Mubarak! May
                     our home always be a sanctuary of love, laughter, and Allah's blessings."</p>
-                <p class="text-xs text-rose-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+                <p class="text-xs text-rose-400 mt-5 font-bold tracking-widest uppercase">Tap to shuffle ↻</p>
             </div>
             <!-- Friends -->
-            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-sky-400 hover:shadow-xl transition-all duration-300"
-                onclick="shuffleWish('friends',this)">
+            <div class="category-card group" style="border-top:4px solid #60a5fa" onclick="shuffleWish('friends',this)">
                 <img src="friends.png" alt="Friends"
-                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-sky-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">🤝 Friends</h3>
-                <p id="wish-friends" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak,
+                    class="w-28 h-28 rounded-full mx-auto mb-5 object-cover border-4 shadow-lg group-hover:scale-105 transition-transform duration-300"
+                    style="border-color:#bfdbfe">
+                <h3 class="font-cormorant text-2xl font-bold mb-3 text-gray-800">🤝 Friends</h3>
+                <p id="wish-friends" class="font-nunito text-gray-500 italic text-sm leading-relaxed">"Eid Mubarak,
                     buddy! May your Eidi be fat and your biryani be fresh!"</p>
-                <p class="text-xs text-sky-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+                <p class="text-xs text-sky-400 mt-5 font-bold tracking-widest uppercase">Tap to shuffle ↻</p>
             </div>
             <!-- Colleagues -->
-            <div class="glass rounded-2xl p-8 text-center cursor-pointer group border-t-4 border-t-yellow-400 hover:shadow-xl transition-all duration-300"
+            <div class="category-card group" style="border-top:4px solid #fbbf24"
                 onclick="shuffleWish('colleagues',this)">
                 <img src="colleagues.png" alt="Colleagues"
-                    class="w-32 h-32 rounded-full mx-auto mb-4 object-cover border-4 border-yellow-100 shadow-lg group-hover:scale-105 transition-transform duration-300">
-                <h3 class="font-cormorant text-2xl font-bold mb-4 text-gray-800">💼 Colleagues</h3>
-                <p id="wish-colleagues" class="font-nunito text-gray-600 italic text-sm leading-relaxed">"Eid Mubarak!
+                    class="w-28 h-28 rounded-full mx-auto mb-5 object-cover border-4 shadow-lg group-hover:scale-105 transition-transform duration-300"
+                    style="border-color:#fde68a">
+                <h3 class="font-cormorant text-2xl font-bold mb-3 text-gray-800">💼 Colleagues</h3>
+                <p id="wish-colleagues" class="font-nunito text-gray-500 italic text-sm leading-relaxed">"Eid Mubarak!
                     Wishing you success, clarity, and joy in the office and beyond."</p>
-                <p class="text-xs text-yellow-400 mt-4 font-semibold">Tap to shuffle ↻</p>
+                <p class="text-xs text-yellow-500 mt-5 font-bold tracking-widest uppercase">Tap to shuffle ↻</p>
             </div>
         </div>
     </section>
 
-    <!-- ══════════════════════════════════ SECTION 4B: RELATIVES WISHES ══ -->
-    <section class="py-20 px-4 max-w-6xl mx-auto reveal">
-        <h2 class="font-cormorant text-4xl md:text-5xl text-center font-bold mb-2" style="color:var(--emerald)">Wishes
-            for Your Loved Ones</h2>
-        <p class="font-amiri text-2xl text-center mb-2" style="color:var(--gold)" dir="rtl">مبارکباد آپ کے پیاروں کے لیے
-        </p>
-        <p class="text-center text-gray-500 mb-12 font-nunito">Tap any card to shuffle • +5 Eidi per shuffle!</p>
+    <!-- ══ AD SLOT 2 — between Category & Relatives sections ══
+         Replace YOUR_AD_SLOT_ID_2 with your slot ID from AdSense dashboard -->
+    <div class="ad-slot-bar">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID_2" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+
+    <!-- ═════════════════════════ SECTION 4B: RELATIVES WISHES ══ -->
+    <section class="py-24 px-4 max-w-6xl mx-auto reveal">
+        <div class="text-center mb-12">
+            <p class="font-amiri text-2xl" style="color:var(--gold)" dir="rtl">مبارکباد آپ کے پیاروں کے لیے</p>
+            <h2 class="section-heading">Wishes for Your Loved Ones</h2>
+            <div class="heading-rule"><span>✦ ✦ ✦</span></div>
+            <p class="section-deck mt-4">Tap any card to shuffle • +5 Eidi per shuffle!</p>
+        </div>
 
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-5 stagger">
 
@@ -659,17 +739,38 @@
 
     <!-- ══════════════════════════════════════════ MODALS ══ -->
 
-    <!-- Name Modal -->
+
+    <!-- Name modal -->
     <div class="modal-overlay" id="name-modal" onclick="closeOnBackdrop(event,'name-modal')">
         <div class="modal-box" onclick="event.stopPropagation()">
-            <h3 class="font-playfair text-2xl font-bold mb-2 text-center" style="color:var(--emerald)">✨ Create Your Eid
-                Card</h3>
-            <p class="font-nunito text-gray-500 text-center mb-6">Enter your name to personalize and share!</p>
-            <input id="name-input" type="text" maxlength="30" placeholder="Your name (e.g. Zubair)"
-                class="w-full border-2 rounded-xl px-4 py-3 text-lg font-nunito focus:outline-none mb-4"
-                style="border-color:var(--gold)" onkeydown="if(event.key==='Enter')generateMyCard()">
+            <!-- Header -->
+            <div class="text-center mb-6">
+                <div style="font-size:2.5rem;margin-bottom:0.4rem">✨</div>
+                <h3 class="font-playfair text-2xl font-bold" style="color:var(--emerald)">Create Your Eid Card</h3>
+                <p class="font-nunito text-sm mt-1" style="color:#7a6840">Personalize &amp; share with your loved ones
+                </p>
+            </div>
+
+            <label class="modal-label">🇯🇵 Your Name</label>
+            <input id="name-input" type="text" maxlength="30" placeholder="e.g. Zubair" class="modal-input mb-4"
+                onkeydown="if(event.key==='Enter')generateMyCard()">
+
+            <label class="modal-label">🇵🇰 آپ کا نام اردو میں &nbsp; <span
+                    style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.78rem;color:#bfaa80">(optional)</span></label>
+            <input id="name-input-ur" type="text" maxlength="30" placeholder="آپ کا نام یہاں لکھیں"
+                class="modal-input mb-4"
+                style="font-family:'Amiri',serif;font-size:1.25rem;direction:rtl;text-align:right"
+                onkeydown="if(event.key==='Enter')generateMyCard()">
+
+            <label class="modal-label">📱 JazzCash / EasyPaisa &nbsp; <span
+                    style="font-weight:400;text-transform:none;letter-spacing:0;font-size:0.78rem;color:#bfaa80">(optional)</span></label>
+            <input id="phone-input" type="tel" maxlength="13" placeholder="e.g. 03001234567" class="modal-input mb-1"
+                onkeydown="if(event.key==='Enter')generateMyCard()">
+            <p class="font-nunito text-xs mb-5" style="color:#bfaa80">🪙 Visitors will see this number to send you Eidi!
+            </p>
+
             <button class="btn-gold w-full text-lg py-4" onclick="generateMyCard()">🎉 Generate My Card!</button>
-            <button class="w-full mt-3 text-gray-400 hover:text-gray-600 font-semibold py-2"
+            <button class="w-full mt-3 font-semibold py-2 text-sm" style="color:#bfaa80"
                 onclick="closeModal('name-modal')">Maybe later</button>
         </div>
     </div>
@@ -693,25 +794,60 @@
 
     <!-- Eidi Modal (hardcoded — never editable by visitor) -->
     <div class="modal-overlay" id="eidi-modal" onclick="closeOnBackdrop(event,'eidi-modal')">
-        <div class="modal-box" onclick="event.stopPropagation()">
-            <h3 class="font-playfair text-2xl font-bold mb-2 text-center" style="color:var(--emerald)">💸 Send Your
-                Eidi!</h3>
-            <p class="font-nunito text-gray-500 text-center mb-6">Show your love with a little Eidi 💛</p>
-            <div class="rounded-xl p-5 mb-5 border-2 text-center"
-                style="background:var(--cream);border-color:var(--gold)">
-                <p class="font-bold text-lg mb-1" style="color:var(--emerald)">📱 EasyPaisa / JazzCash</p>
-                <p class="font-playfair text-3xl font-black tracking-widest" style="color:var(--gold)">03260600676</p>
-                <p class="font-nunito text-gray-600 mt-3">👤 Account Title: <strong>Muhammad Zubair</strong></p>
-                <p class="font-nunito text-gray-600">💰 Minimum: <strong>50 PKR</strong></p>
+        <div class="modal-box eidi-modal-premium" onclick="event.stopPropagation()">
+            <!-- Header -->
+            <div class="eidi-modal-header">
+                <div class="eidi-emoji-ring">💸</div>
+                <h3 class="font-playfair text-2xl font-bold mt-3" style="color:var(--emerald)">Send Eidi to Zubair! 🎁
+                </h3>
+                <p class="font-nunito text-sm mt-1" style="color:#a07820">Show your love this Eid ul Fitr 🌙</p>
             </div>
-            <div class="flex gap-3 flex-wrap">
+
+            <!-- JazzCash Card -->
+            <div class="jazzcash-card">
+                <div class="jazzcash-logo-row">
+                    <span class="jazzcash-pill">📱 JazzCash</span>
+                    <span class="jazzcash-pill" style="background:linear-gradient(135deg,#1B5E3B,#2D6A4F)">💚
+                        EasyPaisa</span>
+                </div>
+                <p class="font-nunito text-xs uppercase tracking-widest mt-3 mb-1" style="color:#a07820">Account Number
+                </p>
+                <p class="font-playfair text-4xl font-black tracking-widest jazzcash-number" id="eidi-number">
+                    0326-0600676</p>
+                <div class="jazzcash-divider"></div>
+                <div class="flex justify-between items-center mt-2 text-sm font-nunito">
+                    <span style="color:#666">👤 <strong>Muhammad Zubair</strong></span>
+                    <button class="copy-number-btn" onclick="copyEidiNumber()">📋 Copy</button>
+                </div>
+            </div>
+
+            <!-- Amount suggestions -->
+            <div class="eidi-amounts">
+                <span class="eidi-amount-chip" onclick="selectAmount(this)">100 ₨</span>
+                <span class="eidi-amount-chip" onclick="selectAmount(this)">200 ₨</span>
+                <span class="eidi-amount-chip" onclick="selectAmount(this)">500 ₨</span>
+                <span class="eidi-amount-chip" onclick="selectAmount(this)">1000 ₨</span>
+            </div>
+
+            <!-- Action buttons -->
+            <div class="flex gap-3 flex-wrap mt-5">
                 <button class="btn-gold flex-1 py-3"
-                    onclick="closeModal('eidi-modal');toast('JazakAllah Khair! 🌙 May Allah bless you!')">Sent! ✅
-                    JazakAllah</button>
+                    onclick="closeModal('eidi-modal');boom();toast('JazakAllah Khair! 🌙 May Allah bless you abundantly!')">✅
+                    Sent! JazakAllah</button>
                 <button class="btn-emerald flex-1 py-3" onclick="closeModal('eidi-modal')">Later 😅</button>
             </div>
-            <p class="text-center text-sm text-gray-400 mt-4 font-nunito italic">JazakAllah Khair 🌙</p>
+            <p class="text-center text-xs text-gray-400 mt-4 font-nunito italic">جزاک اللہ خیر 🌙 Your generosity is
+                recorded by Allah</p>
         </div>
+    </div>
+
+    <!-- ══ AD SLOT 3 — bottom of page (high visibility) ══
+         Replace YOUR_AD_SLOT_ID_3 with your slot ID from AdSense dashboard -->
+    <div class="ad-slot-bar" style="margin-bottom:0">
+        <span class="ad-label">Advertisement</span>
+        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-YOUR_PUBLISHER_ID"
+            data-ad-slot="YOUR_AD_SLOT_ID_3" data-ad-format="auto" data-full-width-responsive="true"></ins>
+        <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
     </div>
 
     <!-- External JS -->

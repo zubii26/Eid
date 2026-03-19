@@ -239,17 +239,52 @@ document.querySelectorAll('.stagger').forEach(el => staggerObserver.observe(el))
 
 
 // ══════ URL PERSONALIZATION ══════
-function applyName(name) {
+function applyName(name, nameUr) {
     name = (name || '').trim() || 'Zubair';
     document.getElementById('hero-name').textContent = name;
     document.getElementById('card-name').textContent = name;
+    // Urdu name — use explicit nameUr if provided, else auto-detect Urdu in name
+    const urText = (nameUr || '').trim();
+    const fallbackUrdu = /[\u0600-\u06FF]/.test(name) ? name : '';
+    const finalUr = urText || fallbackUrdu;
+    const heroUr = document.getElementById('hero-name-ur');
+    const cardUr = document.getElementById('card-name-ur');
+    if (finalUr) {
+        if (heroUr) heroUr.textContent = finalUr;
+        if (cardUr) cardUr.textContent = finalUr;
+    }
     document.title = 'Eid Mubarak from ' + name + ' ✨';
 }
 
 (function () {
-    const name = new URLSearchParams(window.location.search).get('name');
-    if (name) { applyName(name); setTimeout(() => boom(), 1200); }
+    const params = new URLSearchParams(window.location.search);
+    const name   = params.get('name');
+    const nameUr = params.get('nameUr');
+    const phone  = params.get('phone');
+    if (name) { applyName(name, nameUr); setTimeout(() => boom(), 1200); }
+    if (phone) { applyEidiNumber(phone, name || 'Your Friend'); }
 })();
+
+// Apply a custom phone number to the Eidi modal
+function applyEidiNumber(phone, ownerName) {
+    // Format: 0300-1234567 style if 11 digits
+    const digits = phone.replace(/\D/g, '');
+    const formatted = digits.length === 11
+        ? digits.slice(0, 4) + '-' + digits.slice(4)
+        : phone;
+
+    const numEl = document.getElementById('eidi-number');
+    if (numEl) numEl.textContent = formatted;
+
+    // Update modal heading to show owner's name
+    if (ownerName) {
+        const heading = document.querySelector('#eidi-modal .font-playfair');
+        if (heading) heading.innerHTML = `Send Eidi to <span style="color:var(--gold)">${ownerName}</span>! 🎁`;
+        const subtext = document.querySelector('#eidi-modal .eidi-modal-header p');
+        if (subtext) subtext.textContent = `Show your love this Eid ul Fitr 🌙`;
+    }
+}
+
 
 // ══════ CAROUSEL ══════
 function renderWish() {
@@ -469,11 +504,19 @@ function closeOnBackdrop(e, id) { if (e.target === document.getElementById(id)) 
 
 // ══════ CARD GENERATION ══════
 function generateMyCard() {
-    const name = document.getElementById('name-input').value.trim();
+    const name   = document.getElementById('name-input').value.trim();
     if (!name) { toast('Please enter your name first!'); return; }
-    applyName(name);
-    generatedURL = window.location.origin + window.location.pathname + '?name=' + encodeURIComponent(name);
+    const nameUr = (document.getElementById('name-input-ur').value || '').trim();
+    const phone  = (document.getElementById('phone-input').value || '').trim().replace(/\s/g, '');
+    applyName(name, nameUr);
+    // Build share URL
+    let shareBase = window.location.origin + window.location.pathname + '?name=' + encodeURIComponent(name);
+    if (nameUr)  shareBase += '&nameUr=' + encodeURIComponent(nameUr);
+    if (phone)   shareBase += '&phone='  + encodeURIComponent(phone);
+    generatedURL = shareBase;
     document.getElementById('share-url').textContent = generatedURL;
+    // Update Eidi modal with user's own number if provided
+    if (phone) applyEidiNumber(phone, name);
     closeModal('name-modal');
     openModal('eidi-modal');
     setTimeout(() => { closeModal('eidi-modal'); openModal('link-modal'); }, 2000);
@@ -792,3 +835,31 @@ function copyPoem() {
         addScore(10);
     });
 }
+
+// ══════ EIDI HELPERS ══════
+
+function copyEidiNumber() {
+    const num = document.getElementById('eidi-number');
+    const raw = num ? num.textContent.replace(/-/g, '') : '03260600676';
+    navigator.clipboard.writeText(raw).then(() => toast('📋 Number copied! 0326-0600676'));
+}
+
+function selectAmount(el) {
+    document.querySelectorAll('.eidi-amount-chip').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+}
+
+// ══════ AUTO EIDI POPUP (2s after load) ══════
+window.addEventListener('load', () => {
+    // Show Eidi popup after 2 seconds (once per session)
+    if (!sessionStorage.getItem('eidi-popup-shown')) {
+        setTimeout(() => {
+            openModal('eidi-modal');
+            sessionStorage.setItem('eidi-popup-shown', '1');
+            setTimeout(() => {
+                startRain(2000, 200);
+            }, 400);
+        }, 2000);
+    }
+});
+
